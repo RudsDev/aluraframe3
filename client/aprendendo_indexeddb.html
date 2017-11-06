@@ -9,12 +9,20 @@
 <body>
     <script>
 
+        var connection;
+
+        var openRequest = window.indexedDB.open('aluraframe', 2);
+
         openRequest.onupgradeneeded = (event) => {
             console.log('Criando ou atualizando o banco.');
+            var myConn = event.target.result;
+            myConn.createObjectStore('negociacoes');
+
         };
 
         openRequest.onsuccess = (event) => {
             console.log('Foi obtida uma conexão.');
+            connection = event.target.result;
         };
 
         openRequest.onerror = (event) =>  {
