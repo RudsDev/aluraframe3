@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Testes</title>
+    
+</head>
+<body class="container">
+    
+    <h1 class="text-center">Testes</h1>
+    
+</body>
+
+ <script src="Aulas_1_e_2.js"></script>
+
+<script>
+
+    /*var negocio1 = new Negociacao();
+    negocio1.quantidade = 5;
+    console.log(negocio1);*/
+
+    var negocio2 = new Negociacao(new Date, 25, 3);
+    /*console.log('Quantidade: ' + negocio2.getQuantidade());
+    console.log('Valor: ' + negocio2.getValor());
+    console.log('Volume: ' + negocio2.obterVolume());*/
+
+    console.log('Data: ' + negocio2.data);
+    console.log('Quantidade: ' + negocio2.quantidade);
+    console.log('Valor: ' + negocio2.valor);
+    console.log('Volume: ' + negocio2.obterVolume());
+
+    //A data original não será alterada
+    negocio2.data.setDate(22);
+    console.log('Data: ' + negocio2.data);
+
+    negocio2.loopFor();
+
+
+</script>
+
+
+</html>
