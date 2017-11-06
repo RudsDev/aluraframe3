@@ -7,17 +7,22 @@
     <title>Aprendendo Indexed DB</title>
 </head>
 <body>
+
+    <script src="js/app/models/Negociacao.js"></script>
     <script>
 
         var connection;
-
-        var openRequest = window.indexedDB.open('aluraframe', 2);
+        var openRequest = window.indexedDB.open('aluraframe', 3);
 
         openRequest.onupgradeneeded = (event) => {
             console.log('Criando ou atualizando o banco.');
-            var myConn = event.target.result;
-            myConn.createObjectStore('negociacoes');
+            let myConn = event.target.result;
 
+            if(myConn.objectStoreNames.contains('negociacoes')){
+                myConn.deleteObjectStore('negociacoes');
+            }
+
+            myConn.createObjectStore('negociacoes',{autoIncrement: true});
         };
 
         openRequest.onsuccess = (event) => {
@@ -28,6 +33,21 @@
         openRequest.onerror = (event) =>  {
             console.log(event.target.error);
         };
+
+        function adciona() {
+            let tx = connection.transaction(['negociacoes'],'readwrite'); 
+
+            let store  = tx.objectStore('negociacoes');
+            let request = store.add(new Negociacao(new Date(),1,250));
+
+            request.onsuccess = (event)=>{
+                console.log('Negociação incluida com sucesso.');
+            };
+
+            request.onerror = (event)=>{
+                console.log('Negociação não incluída.');
+            };
+        }
 
     </script>
 </body>
