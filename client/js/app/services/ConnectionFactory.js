@@ -14,17 +14,29 @@ class ConnectionFactory{
 
             let openRequest = window.indexedDB.open(stores,version);
 
-            openRequest.onupgradeneeded((event)=>{
+            openRequest.onupgradeneeded = (event)=>{
                 
-            })
+                ConnectionFactory._createStore(event.target.result);
 
-            openRequest.onsuccess((event)=>{
-                
-            })
+            };
 
-            openRequest.onerror ((event)=>{
-                
-            })
+            openRequest.onsuccess = (event)=>{
+                resolve(event.target.result);
+            };
+
+            openRequest.onerror = (event)=>{
+                console.log(event.target.error);
+                reject(event.target.error.name);
+            };
         });
     }
+
+    static _createStore(conn){
+        stores.forEach((store)=>{
+            if(conn.objectStoreNames.contains(store))
+                conn.deleteObjectStore(store);
+            conn.createObjectStore(store,{autoincrement:true})
+        });
+    }
+
 }
