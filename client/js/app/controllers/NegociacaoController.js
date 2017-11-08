@@ -17,6 +17,14 @@ class NegociacaoController {
                                   new MensagemView($('#mensagemView')),
                                   'texto');
 
+        ConnectionFactory
+            .getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.listaTodas())
+            .then(negociacoes => 
+                negociacoes.forEach(negociacao => 
+                    this._listagem.adiciona(negociacao)));
+
         Object.freeze(this);
     }
 
@@ -40,10 +48,7 @@ class NegociacaoController {
                     this._mensagem.texto = erro;
                 });
 
-        });
-
-        
-
+        });     
     }
 
     esvaziarLista(){
