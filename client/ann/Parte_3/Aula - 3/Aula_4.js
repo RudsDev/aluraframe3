@@ -2,4 +2,4 @@
 
 
 
-/*/## 4 -  ##/*/
+/*/## 4 - Removendo todas as negociações ##/*/

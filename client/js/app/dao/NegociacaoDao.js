@@ -34,13 +34,9 @@ class NegociacaoDao{
         return new Promise((resolve, reject) => {
             
             let cursor = this._connection
-            .transaction([this._store],'readwrite')
-            .objectStore(this._store)
-            .openCursor();
-
-
-
-
+                .transaction([this._store],'readwrite')
+                .objectStore(this._store)
+                .openCursor();
 
             let negociacoes = [];
 
@@ -49,25 +45,42 @@ class NegociacaoDao{
                 let atual = event.target.result;
 
                 if(atual){
-                    
                     let dado = atual.value;
-    
                     negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
-    
                     atual.continue();
                 }else{
                     resolve(negociacoes);
                 }
-
             };
 
             cursor.onerror = (event)=>{
                 console.log(event.target.error.name);
                 reject('Não foi possivel listar as negociações.');
             };
-
-
         });
+    }
+
+
+    apagaTodas(){
+
+        return new Promise((resolve, reject) => {
+            
+            let request = this._connection
+                .transaction([this._store],'readwrite')
+                .objectStore(this._store)
+                .clear();
+
+
+            request.onsuccess = (event)=>{
+                resolve('Negociações removidas com sucesso');
+            };
+
+            request.onerror = (event)=>{
+                console.log(event.target.error);
+                reject('Não foi possivel apagar as negociações.');
+            };
+        });
+
     }
 
 }
