@@ -53,7 +53,7 @@ var ConnectionFactory = (function tempConnectionFactory() {
             stores.forEach((store)=>{
                 if(conn.objectStoreNames.contains(store))
                     conn.deleteObjectStore(store);
-                conn.createObjectStore(store,{autoincrement:true})
+                conn.createObjectStore(store,{autoIncrement:true})
             });
         }
     }    
