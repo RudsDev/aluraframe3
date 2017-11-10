@@ -40,7 +40,6 @@ class NegociacaoService{
                     if(xhr.status == 200) {
                         resolve(JSON.parse(xhr.responseText)
                             .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
-        
                     } else {
                         console.log(xhr.responseText);
                         reject('Não foi possível obter as negociações da semana anterior.');
@@ -94,6 +93,18 @@ class NegociacaoService{
         }).catch(erro => {
             throw new Error(erro);
         });
-	} 
+    } 
+    
+    cadastrar(negociacao){
+
+        return ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.adiciona(negociacao))
+            .then(()=> 'Negociação adcionada com sucesso.')
+            .catch((error)=> {
+                console.log(error);
+                throw new Error('Negociação não adicionada.');
+            });
+    }
 
 }
