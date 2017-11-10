@@ -13,4 +13,15 @@ class HttpService {
             .catch(erro => console.log(erro));
 
     }
+
+    post(url, data){
+
+        return fetch(url,{
+            headers: { 'Content-Type': 'application/json' },
+            method: 'post',
+            body: JSON.stringify(data)
+        })
+        .then(resp => this._handleErrors(resp));
+
+    }
 }
