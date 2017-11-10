@@ -128,4 +128,17 @@ class NegociacaoService{
             });
     }
 
+    importar(listaAtual){
+        return this.obterNegociacoes()
+            .then(negociacoes =>
+                negociacoes.filter(negociacao =>
+                    !listaAtual.some(negociacaoInList =>
+                        JSON.stringify(negociacao)==JSON.stringify(negociacaoInList)))
+            )
+            .catch(erro => {
+                console.log(erro);
+                throw new Error('Não foi possivel importar.');
+            });    
+    }
+
 }
