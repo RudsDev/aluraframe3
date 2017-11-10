@@ -3,11 +3,12 @@ class NegociacaoController {
     constructor(){
 
         let $ = document.querySelector.bind(document);
-        let _self = this;
 
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
+
+        this._service = new NegociacaoService();
 
         this._listagem = new Bind(new ListaNegociacoes(),
                              new NegociacoesView($('#negociacoesView')),
@@ -20,7 +21,7 @@ class NegociacaoController {
 
         Object.freeze(this);
 
-        }
+    }
                                 
     adiciona(event){
         
@@ -28,7 +29,7 @@ class NegociacaoController {
 
         let negociacao = this._criarNegociacao();
 
-        new NegociacaoService().cadastrar(negociacao)
+        this._service.cadastrar(negociacao)
             .then(mensagem => {
                 this._listagem.adiciona(negociacao);
                 this._mensagem.texto = mensagem;
@@ -38,21 +39,18 @@ class NegociacaoController {
     }
     
     esvaziarLista(){
-        
-        ConnectionFactory.getConnection()
-        .then(connection => new NegociacaoDao(connection))
-        .then(dao => dao.apagaTodas())
-        .then(mensagem =>{
+
+        this._service.apagar()
+        .then(mensagem => {
             this._mensagem.texto = mensagem;
             this._listagem.esvaziarLista();
-        });
+        })
+        .catch(erro => this._mensagem.texto = erro);
     }
     
     importarNegociacoes() {
         
-        
-        let service = new NegociacaoService();
-        service
+        this._service
         .obterNegociacoes()
         .then(negociacoes =>
             negociacoes.filter(negociacao =>
@@ -84,18 +82,15 @@ class NegociacaoController {
     
     _init(){
         
-        ConnectionFactory
-            .getConnection()
-            .then(connection => new NegociacaoDao(connection))
-            .then(dao => dao.listaTodas())
-            .then(negociacoes => 
-                negociacoes.forEach(negociacao => 
-                    this._listagem.adiciona(negociacao)))
-            .catch(erro => {
-                console.log(erro);
-                this._mensagem.texto = erro;
-            })
-        
+        this._service.listar()
+        .then(negociacoes => 
+            negociacoes.forEach(negociacao =>
+            this._listagem.adiciona(negociacao))
+        )
+        .catch(erro => {
+            this._mensagem.texto = erro;
+        })
+
         setInterval(()=>{
             console.log('Importando Negociações');
             this.importarNegociacoes();

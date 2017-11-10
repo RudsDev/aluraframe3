@@ -50,7 +50,6 @@ class NegociacaoService{
         });
     }
 
-
     obterNegociacoesDaSemanaRetrasada() {
         
         let xhr = new XMLHttpRequest();
@@ -104,6 +103,28 @@ class NegociacaoService{
             .catch((error)=> {
                 console.log(error);
                 throw new Error('Negociação não adicionada.');
+            });
+    }
+
+    listar(){
+
+        return ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.listaTodas())
+            .catch((error)=> {
+                console.log(error);
+                throw new Error('Lista não importada.');
+            });
+    }
+
+    apagar(){
+        return ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.apagaTodas())
+            .then(()=> 'Negociação apagadas com sucesso.')
+            .catch((error)=> {
+                console.log(error);
+                throw new Error('Negociações não apagadas');
             });
     }
 
