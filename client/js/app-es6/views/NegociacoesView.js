@@ -1,9 +1,20 @@
 import {View} from "./View";
 import {DateHelper} from "../helpers/DateHelper";
+import {currentInstance} from './controllers/NegociacaoController';
+
+let negociacaoController = currentInstance();
+
 export class NegociacoesView extends View{
 
     constructor(element){
         super(element);
+
+        element.addEventListener('click', function(event) {
+            if(event.target.nodeName=='TH'){
+                currentInstance().ordena(event.target.textContent.toLowerCase())
+                
+            }
+        })
     }
 
     _template(model){

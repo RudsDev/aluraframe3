@@ -8,7 +8,7 @@ import {NegociacaoService} from "../services/NegociacaoService";
 import {DateHelper} from "../helpers/DateHelper";
 import {Bind} from "../services/Bind";
 
-export class NegociacaoController {
+class NegociacaoController {
 
     constructor(){
 
@@ -99,4 +99,10 @@ export class NegociacaoController {
             this.importarNegociacoes();
         },3000);
     }
+}
+
+let negociacaoController = new NegociacaoController();
+
+export function currentInstance() {
+    return negociacaoController;
 }

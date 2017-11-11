@@ -1,7 +1,7 @@
-import {NegociacaoController} from './controllers/NegociacaoController';
+import {currentInstance} from './controllers/NegociacaoController';
 import {} from '/js/app/polyfill/fetch';
 
-let negociacaoController = new NegociacaoController();
+let negociacaoController = currentInstance();
 
 /*Retirando a reponsabilidade de ligação dos btns coms os métodos
 apagar e adicionar da View e delegando para o boot.js*/
