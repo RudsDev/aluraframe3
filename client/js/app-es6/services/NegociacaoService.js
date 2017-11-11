@@ -1,4 +1,7 @@
-class NegociacaoService{
+import {HttpService} from "./HttpService";
+import {ConnectionFactory} from "../services/ConnectionFactory";
+import {NegociacaoDao} from "../dao/NegociacaoDao";
+export class NegociacaoService{
     
     constructor() {
         

@@ -1,4 +1,4 @@
-class HttpService {
+export class HttpService {
 
     /* res.ok() verifica se houver algum erro na requisição */
     _handleErrors(res) {

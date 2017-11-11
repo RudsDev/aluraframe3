@@ -1,4 +1,4 @@
-class ListaNegociacoes{
+export class ListaNegociacoes{
 
     constructor(trigger){
         this._trigger = trigger;
