@@ -1,5 +1,5 @@
 import {NegociacaoController} from './controllers/NegociacaoController';
-import {} from '/polyfill/fetch';
+import {} from '/js/app/polyfill/fetch';
 
 let negociacaoController = new NegociacaoController();
 
@@ -8,4 +8,4 @@ apagar e adicionar da View e delegando para o boot.js*/
 document.querySelector('.form').onsubmit = 
     negociacaoController.adiciona.bind(negociacaoController);
 document.querySelector('[type=button]').onclick = 
-    negociacaoController.apaga.bind(negociacaoController);
+    negociacaoController.esvaziarLista.bind(negociacaoController);

@@ -7,7 +7,8 @@ import {MensagemView} from "../views/MensagemView";
 import {NegociacaoService} from "../services/NegociacaoService";
 import {DateHelper} from "../helpers/DateHelper";
 import {Bind} from "../services/Bind";
-class NegociacaoController {
+
+export class NegociacaoController {
 
     constructor(){
 
